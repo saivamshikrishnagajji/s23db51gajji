@@ -1,0 +1,31 @@
+
+extends layout
+
+block content
+  h1= title
+  p  #{title}
+  -
+    let results = [
+      { animal_type: 'Lion', color: 'Brown', legs: 4 },
+      { animal_type: 'Tiger', color: 'Gray', legs: 4 },
+      { animal_type: 'Deer', color: 'Green', legs: 4 }
+    ]
+
+  .container-fluid
+    .row
+      each animals,index in results
+        .col-sm-2
+          p Animal Type: #{animals.animal_type}
+          p Color: #{animals.color}
+          p Legs: #{animals.legs}
+          a(href="#" onclick=`buy(${index}); return false;`) Buy Animal #{index}
+
+  a(href="/animals") Go Back
+
+
+  script.
+    function buy(index) {
+      alert(`You purchased animal ${index}`);
+    }
+
+
