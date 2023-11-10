@@ -18,9 +18,9 @@ res.send(`{"error": ${err}}`);
 };
 
 // for a specific Animal.
-exports.animal_detail = function(req, res) {
-res.send('NOT IMPLEMENTED: Animal detail: ' + req.params.id);
-};
+//exports.animal_detail = function(req, res) {
+//res.send('NOT IMPLEMENTED: Animal detail: ' + req.params.id);
+//};
 // Handle Animal create on POST.
 
 // Handle Animal delete form on DELETE.
@@ -28,8 +28,25 @@ exports.animal_delete = function(req, res) {
 res.send('NOT IMPLEMENTED: Animal delete DELETE ' + req.params.id);
 };
 // Handle Animal update form on PUT.
-exports.animal_update_put = function(req, res) {
-res.send('NOT IMPLEMENTED: Animal update PUT' + req.params.id);
+// Handle Costume update form on PUT.
+exports.animal_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+try {
+let toUpdate = await Animal.findById( req.params.id)
+// Do updates of properties
+if(req.body.animal_type)
+toUpdate.animal_type = req.body.animal_type;
+if(req.body.color) toUpdate.color = req.body.color;
+if(req.body.wings) toUpdate.legs = req.body.wings;
+let result = await toUpdate.save();
+console.log("Sucess " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+}
 };
 
 //VIEWS
@@ -56,7 +73,7 @@ exports.animal_create_post = async function(req, res) {
     // {"animal_type":"goat", "cost":12, "size":"large"}
     document.animal_type = req.body.animal_type;
     document.color = req.body.color;
-    document.legs = req.body.legs;
+    document.wings = req.body.wings;
     try{
     let result = await document.save();
     res.send(result);
@@ -68,4 +85,16 @@ exports.animal_create_post = async function(req, res) {
     };
     
 
+    // for a specific Costume.
+    exports.animal_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await Animal.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+    
 

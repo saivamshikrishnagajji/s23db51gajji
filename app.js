@@ -1,5 +1,4 @@
 // const Animal = require('./models/animal');
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -30,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/routes', chooseRouter);
 app.use('/users', usersRouter);
 app.use('/animals', animalRouter);
 app.use('/board', boardRouter);
