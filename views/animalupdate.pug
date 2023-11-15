@@ -1,32 +1,32 @@
 extends layout
 
 block content
-    h1= title
+    h1.text-success= title
 
     if (toShow == null)
-        h2 No instance to update
+        h2.text-danger No instance to update
     else
         - let id = toShow._id
         - let animal_type = toShow.animal_type
         - let color = toShow.color
         - let legs = toShow.legs
 
-        div.row.mb-2
-            div.mr-1.text-info ID is
-            div.text-success #{id}
+        div.row.mb-2.bg-info.text-light.p-3
+            div.mr-1 ID is
+            div #{id}
 
         - let actionid = "/resource/animal/" + id
         form#AnimalForm(class='mt-3', action=actionid, method="PUT")
             div.form-group
-                label.animalAttr(for='animal_type' class='text-info') animal Type
-                input#animal_type(type='text', name='animal_type', value=animal_type)
+                label.animalAttr(for='animal_type' class='text-warning') Animal Type
+                input#animal_type.form-control(type='text', name='animal_type', value=animal_type)
             div.form-group
-                label.animalAttr(for='color' class='text-info') Color
-                input#color(type='text', name='color', value=color)
+                label.animalAttr(for='color' class='text-danger') Color
+                input#color.form-control(type='text', name='color', value=color)
             div.form-group
-                label.animalAttr(for='number_of_wings' class='text-info') Legs
-                input#number_of_wings(type='number', name='legs', value=legs)
-            input(type="submit" value="Update")
+                label.animalAttr(for='number_of_wings' class='text-primary') Legs
+                input#number_of_wings.form-control(type='number', name='legs', value=legs)
+            input.btn.btn-success(type="submit" value="Update")
 
         script.
             document.forms.AnimalForm.addEventListener('submit', async (event) => {
