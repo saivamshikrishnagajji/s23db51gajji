@@ -72,7 +72,7 @@ let toUpdate = await Animal.findById( req.params.id)
 if(req.body.animal_type)
 toUpdate.animal_type = req.body.animal_type;
 if(req.body.color) toUpdate.color = req.body.color;
-if(req.body.wings) toUpdate.legs = req.body.wings;
+if(req.body.legs) toUpdate.legs = req.body.legs;
 let result = await toUpdate.save();
 console.log("Sucess " + result)
 res.send(result)
@@ -117,7 +117,7 @@ exports.animal_create_post = async function(req, res) {
     
     document.animal_type = req.body.animal_type;
     document.color = req.body.color;
-    document.wings = req.body.wings;
+    document.legs = req.body.legs;
     try{
     let result = await document.save();
     res.send(result);
