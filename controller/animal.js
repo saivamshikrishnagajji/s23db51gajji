@@ -24,8 +24,42 @@ res.send(`{"error": ${err}}`);
 // Handle Animal create on POST.
 
 // Handle Animal delete form on DELETE.
-exports.animal_delete = function(req, res) {
-res.send('NOT IMPLEMENTED: Animal delete DELETE ' + req.params.id);
+exports.animal_create_Page = function (req, res) {
+    console.log("create view");
+    res.render('animalcreate', { title: 'Animals Create' });
+  };
+  
+  exports.animal_create = async function (req, res) {
+    try {
+      const { animal_type, color, legs } = req.body;
+  
+      // Create a new Aeroplane document
+      const animal = new Animal({
+        animal_type,
+        color,
+        legs,
+      });
+  
+      // Save the document to the database
+      await animal.save();
+  
+      res.status(201).json(animal); // Respond with the created Aeroplane document
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+    
+
+exports.animal_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await Animal.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
 };
 // Handle Animal update form on PUT.
 // Handle Costume update form on PUT.
@@ -49,6 +83,19 @@ failed`);
 }
 };
 
+exports.animal_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await Animal.findById( req.query.id)
+    res.render('animaldetail',
+    { title: 'Animal Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
+
 //VIEWS
 // Handle a show all view
 exports.animal_view_all_Page = async function(req, res) {
@@ -67,10 +114,7 @@ res.send(`{"error": ${err}}`);
 exports.animal_create_post = async function(req, res) {
     console.log(req.body)
     let document = new Animal();
-    // We are looking for a body, since POST does not have query parameters.
-    // Even though bodies can be in many different formats, we will be picky
-    // and require that it be a json object
-    // {"animal_type":"goat", "cost":12, "size":"large"}
+    
     document.animal_type = req.body.animal_type;
     document.color = req.body.color;
     document.wings = req.body.wings;
@@ -97,4 +141,21 @@ exports.animal_create_post = async function(req, res) {
     }
     };
     
-
+    exports.animal_update_Page = async function(req, res) {
+        console.log("update view for item " + req.query.id);
+        try {
+            let result = await Animal.findById(req.query.id);
+            
+            if (req.body.animal_type) result.animal_type = req.body.animal_type;
+            if (req.body.color) result.color = req.body.color;
+            if (req.body.legs) result.legs = req.body.legs;
+    
+            // Save the updated aeroplane data
+            let updatedAnimal = await result.save();
+            console.log("Update success: ", updatedAnimal);
+            res.render('animalupdate', { title: 'Animal Update', toShow: updatedAnimal });
+        } catch (err) {
+            res.status(500).send({'error': '${err}'});
+        }
+    };
+    

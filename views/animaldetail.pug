@@ -1,0 +1,23 @@
+extends layout
+
+block content
+    head
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    h1= title
+    - let animalid = toShow._id
+    - let animal_type = toShow.animal_type
+    - let color = toShow.color
+    - let legs = toShow.legs
+    div
+        div.row
+            div(class='animalAttr mr-3') animal ID is:
+                div #{animalid}
+        div.row
+            div(class='animalAttr mr-3') animal Type is:
+                div #{animal_type}
+        div.row
+            div(class='animalAttr mr-3') animal Color is:
+                div #{color}
+        div.row
+            div(class='animalAttr mr-3') animal legs are:
+                div #{legs}
