@@ -159,3 +159,18 @@ exports.animal_create_post = async function(req, res) {
         }
     };
     
+
+    exports.animal_delete_Page = async function(req, res) {
+        console.log("Delete view for id " + req.query.id)
+        try{
+        result = await Animal.findById(req.query.id)
+        res.render('animaldelete', { title: 'Animal Delete', toShow:
+        result });
+        }
+        catch(err){
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+        }
+        };
+      
+        
