@@ -118,6 +118,14 @@ then(() => {
 })
 .catch((err) => console.log(err.message))
 
+//  passport config
+// Use the existing connection
+// The Account model
+var Account =require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
