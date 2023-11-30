@@ -12,6 +12,7 @@ block content
           | Animal: #{item.animal_type} (#{item.color}) #{item.legs} 
           button.btn.btn-primary.ml-1(onclick=`dispatch('${destination}')`) Update
           button.btn.btn-primary.ml-1(onclick=`dispatch('${destination}')`) View Details
+          button.btn.btn-primary.ml-1(onclick=`dispatch('${destination}')`) Delete
 
   script.
     function dispatch(path) {
