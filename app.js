@@ -16,28 +16,9 @@ var resourceRouter = require('./routes/resource');
 var Animal = require("./models/animal");
 const mongoose = require('mongoose');require('dotenv').config();
 
+
 const connectionString = process.env.MONGO_CON;
-
 var app = express();
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/routes', chooseRouter);
-app.use('/users', usersRouter);
-app.use('/animals', animalRouter);
-app.use('/board', boardRouter);
-app.use('/animal', animalRouter);
-app.use('/resource', resourceRouter);
-
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -66,6 +47,29 @@ passport.use(new LocalStrategy(
     }));
     app.use(passport.initialize());
     app.use(passport.session());
+
+
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/routes', chooseRouter);
+app.use('/users', usersRouter);
+app.use('/animals', animalRouter);
+app.use('/board', boardRouter);
+app.use('/animal', animalRouter);
+app.use('/resource', resourceRouter);
+
+
+
     
 // mongoose.connect(connectionString);
 
