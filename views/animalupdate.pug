@@ -25,7 +25,7 @@ block content
                 input#color.form-control(type='text', name='color', value=color)
             div.form-group
                 label.animalAttr(for='number_of_wings' class='text-primary') Legs
-                input#number_of_wings.form-control(type='number', name='legs', value=legs)
+                input#number_of_wings.form-control(type='number', min = 2, max = 4, name='legs', value=legs)
             input.btn.btn-success(type="submit" value="Update")
 
         script.

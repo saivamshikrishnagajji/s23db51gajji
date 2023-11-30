@@ -5,11 +5,13 @@ block content
   - let items = results;
   div(class="container-fluid")
     div(class="row m-1")
+      a.btn.btn-success(href="/animal/create") Create New Animal
       each item in items
         - let destination = `/animal/update?id=${item._id}`
         div(class="row-sm-2", class="m-1")
           | Animal: #{item.animal_type} (#{item.color}) #{item.legs} 
           button.btn.btn-primary.ml-1(onclick=`dispatch('${destination}')`) Update
+          button.btn.btn-primary.ml-1(onclick=`dispatch('${destination}')`) View Details
 
   script.
     function dispatch(path) {
